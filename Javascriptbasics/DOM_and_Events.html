@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" src="style.css" />
+        <script>
+            function calc() {
+                var num1 = parseInt(document.getElementById('num1').value)
+                var num2 = parseInt(document.getElementById('num2').value)
+                var sum = num1 + num2
+                document.getElementById('sum').value = sum
+            }
+
+            function showText() {
+                var textElement = document.getElementById('text')
+                var moreLink = document.getElementById('more')
+
+                if (textElement.style.display === 'none') {
+                    textElement.style.display = 'inline'
+                    moreLink.style.display = 'none'
+                } else {
+                    textElement.style.display = 'none'
+                    moreLink.textContent = 'Read more …'
+                }
+            }
+            function extractText() {
+                var ulElement = document.getElementById('items')
+                var liElements = ulElement.getElementsByTagName('li')
+                var extractedText = ''
+
+                for (var i = 0; i < liElements.length; i++) {
+                    extractedText += liElements[i].textContent + '\n'
+                }
+                document.getElementById('result').textContent = extractedText
+            }
+
+            function addItem() {
+                var text = document.getElementById('newText').value
+                if (text.trim() === '') {
+                    alert('Please enter a valid item.')
+                    return
+                }
+                var ul = document.getElementById('add_items')
+                var li = document.createElement('li')
+                li.textContent = text
+                var deleteButton = document.createElement('button')
+                deleteButton.textContent = 'Delete'
+                deleteButton.onclick = function () {
+                    ul.removeChild(li)
+                }
+                li.appendChild(deleteButton)
+                ul.appendChild(li)
+                document.getElementById('newText').value = ''
+            }
+
+            window.onload = function () {
+                stopwatch()
+            }
+        </script>
+    </head>
+    <body>
+    
+
+        <h2>Sum_Numbers</h2>
+        <input type="text" id="num1" /> + <input type="text" id="num2" /> =
+        <input type="text" id="sum" readonly="readonly" />
+        <input type="button" value="Calc" onclick="calc()" />
+
+        <h2>Show More</h2>
+        <p>
+            Welcome to the "Show More Text Example".
+            <a href="#" id="more" onclick="showText()">Read more …</a>
+            <span id="text" style="display: none"
+                >Welcome to JavaScript and DOM.</span
+            >
+        </p>
+
+        <h2>Collect List Items</h2>
+
+        <ul id="items">
+            <li>first item</li>
+            <li>second item</li>
+            <li>third item</li>
+        </ul>
+        <textarea id="result"></textarea>
+        <br />
+        <button onclick="extractText()">Extract Text</button>
+
+        <h2>Add and Delete</h2>
+
+        <h3>List of Items</h3>
+        <ul id="add_items"></ul>
+        <input type="text" id="newText" />
+        <input type="button" value="Add" onclick="addItem()" />
+
+        <h2>Stopwatch</h2>
+        <div
+            id="time"
+            style="
+                border: 3px solid blue;
+                text-align: center;
+                font-size: 2em;
+                margin-bottom: 10px;
+            "
+        >
+            00:00
+        </div>
+        <button id="startBtn">Start</button>
+        <button id="stopBtn" disabled="true">Stop</button>
+    </body>
+</html>
